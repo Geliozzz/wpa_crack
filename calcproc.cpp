@@ -1,5 +1,6 @@
 #include "calcproc.h"
 
+
 CalcProc::CalcProc(KeyBox* keyBox, hccap_t* hccap, CalcHash* calc)
 {
     this->keyBox = keyBox;
@@ -39,7 +40,7 @@ void CalcProc::run()
 
     if (memcmp(calc->mic, hccap->keymic, 16) == 0)
     {
-        emit resultReady("SUCCESS!");
-    } else emit resultReady("FAIL");
+        emit resultReady();
+    } else emit resultReady();
 
 }

@@ -19,8 +19,12 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+public slots:
+    void slotAppend();
+
 private slots:
     void on_btnOpenCap_clicked();
+
 
 private:
     Ui::MainWindow *ui;

@@ -16,13 +16,9 @@ private:
 public:
     CalcProc(KeyBox* keyBox, hccap_t* hccap, CalcHash* calc);
         void run();
-//        {
-//            QString result;
-//            /* expensive or blocking operation  */
-//            emit resultReady(result);
-//        }
+
     signals:
-        void resultReady(const QString &s);
+        void resultReady();
 };
 
 #endif // CALCPROC_H

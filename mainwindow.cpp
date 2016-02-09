@@ -27,8 +27,6 @@ void MainWindow::on_btnOpenCap_clicked()
     calcHash = new CalcHash();
     keyBox = new KeyBox();
 
-
-
     file.setFileName(str_file);
     file.open(QIODevice::ReadOnly);
     file.read((char*)&hccap, sizeof(hccap));
@@ -47,8 +45,14 @@ void MainWindow::on_btnOpenCap_clicked()
     }
 
     calcProc = new CalcProc(keyBox, &hccap, calcHash);
+    connect(calcProc, SIGNAL(resultReady()), this, SLOT(slotAppend()), Qt::AutoConnection);
     calcProc->start();
    // char *key = "9653652827";
-
-
+    ui->teMain->append("111");
 }
+
+void MainWindow::slotAppend()
+{
+    ui->teMain->append("XXX");
+}
+
