@@ -45,14 +45,12 @@ void MainWindow::on_btnOpenCap_clicked()
     }
 
     calcProc = new CalcProc(keyBox, &hccap, calcHash);
-    connect(calcProc, SIGNAL(resultReady()), this, SLOT(slotAppend()), Qt::AutoConnection);
+    connect(calcProc, SIGNAL(resultReady(QString)), this, SLOT(slotAppend(QString)), Qt::AutoConnection);
     calcProc->start();
-   // char *key = "9653652827";
-    ui->teMain->append("111");
 }
 
-void MainWindow::slotAppend()
+void MainWindow::slotAppend(QString str)
 {
-    ui->teMain->append("XXX");
+    ui->teMain->append(str);
 }
 

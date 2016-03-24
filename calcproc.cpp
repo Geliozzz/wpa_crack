@@ -1,5 +1,5 @@
 #include "calcproc.h"
-
+#include "QTime"
 
 CalcProc::CalcProc(KeyBox* keyBox, hccap_t* hccap, CalcHash* calc)
 {
@@ -10,6 +10,8 @@ CalcProc::CalcProc(KeyBox* keyBox, hccap_t* hccap, CalcHash* calc)
 
 void CalcProc::run()
 {
+    QTime time;
+    int iter = 0;
     char essid_pre[32];
     memset(essid_pre, 0, 32);
     memcpy(essid_pre, hccap->essid, 8);
@@ -31,16 +33,27 @@ void CalcProc::run()
         memcpy( pke + 35, hccap->anonce, 32 );
         memcpy( pke + 67, hccap->snonce, 32 );
     }
-
-    calc->calc_pmk("123", essid_pre, calc->pmk);
-
-    calc->calc_ptk( calc->pmk, pke, calc->ptk );
-
-    calc->calc_mic(3, calc->ptk, hccap->eapol, hccap->eapol_size, calc->mic);
-
-    if (memcmp(calc->mic, hccap->keymic, 16) == 0)
+    time.start();
+    while(1)
     {
-        emit resultReady();
-    } else emit resultReady();
 
+        calc->calc_pmk(keyBox->GetKey().toStdString().c_str(), essid_pre, calc->pmk);
+
+        calc->calc_ptk( calc->pmk, pke, calc->ptk );
+
+        calc->calc_mic(3, calc->ptk, hccap->eapol, hccap->eapol_size, calc->mic);
+
+        if (memcmp(calc->mic, hccap->keymic, 16) == 0)
+        {
+            emit resultReady("OK" + QString::number(keyBox->GetNumber()));
+            break;
+        } //else emit resultReady("FAIL");
+        iter++;
+        if(time.elapsed() >= 1000)
+        {
+           time.restart();
+           emit resultReady(QString::number(iter) + " - " + QString::number(keyBox->GetNumber()));
+           iter = 0;
+        }
+    }
 }

@@ -18,7 +18,7 @@ public:
         void run();
 
     signals:
-        void resultReady();
+        void resultReady(QString);
 };
 
 #endif // CALCPROC_H

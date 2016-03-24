@@ -7,7 +7,7 @@ CalcHash::CalcHash()
 {
 
 }
-void CalcHash::calc_pmk( char *key, char *essid_pre, unsigned char pmk[40] )
+void CalcHash::calc_pmk(const char *key, char *essid_pre, unsigned char pmk[40] )
 {
     int i, j, slen;
     unsigned char buffer[65];

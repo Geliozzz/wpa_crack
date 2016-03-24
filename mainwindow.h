@@ -20,7 +20,7 @@ public:
     ~MainWindow();
 
 public slots:
-    void slotAppend();
+    void slotAppend(QString);
 
 private slots:
     void on_btnOpenCap_clicked();
